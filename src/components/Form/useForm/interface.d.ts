@@ -65,7 +65,7 @@ export type ReducerAction = UpdateAction | validateAction;
 interface UpdateAction {
 	type: "updateValue";
 	name: NameProps;
-	value: any;
+	value: unknown;
 }
 
 interface validateAction {

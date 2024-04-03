@@ -1,5 +1,5 @@
 import Layout from "./Layout.tsx";
-import React, { useContext } from 'react'
+import React, { useCallback, useContext, useEffect } from 'react'
 import { useUpdate } from "../../Hooks";
 import FormContext from "./useForm/FormContext.ts";
 
@@ -17,6 +17,19 @@ const FormItem: React.FC<IFormItemProps> = (props) => {
 	const update = useUpdate();
 
 	let childrenWithProps = children
+
+	useEffect(() => {
+		const updateChange = () => {
+			return {
+				updateValue: () => update(),
+			};
+		};
+
+		name && registerField(name, updateChange);
+		return () => {
+			name && unRegisterField(name);
+		};
+	}, [name, registerField, unRegisterField, update]);
 
 	if (!React.isValidElement(children)) {
 		console.error('FormItem children must be a valid React element')

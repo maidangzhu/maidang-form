@@ -2,7 +2,8 @@ import { DataProps, FormInstance, NameProps, ReducerAction } from "./interface";
 
 export class FormManager {
 	private store: DataProps = {};
-	private initialValues: DataProps = {};
+	private readonly initialValues: DataProps = {};
+	private update_store: DataProps = {};
 
 	constructor(initialValues: DataProps) {
 		this.store = initialValues;
@@ -33,12 +34,12 @@ export class FormManager {
 		}
 	}
 
-	registerField() {
-
+	registerField(name: NameProps, updateChange: DataProps) {
+		this.update_store[name] = updateChange;
 	}
 
-	unRegisterField() {
-
+	unRegisterField(name: NameProps) {
+		delete this.update_store[name];
 	}
 
 	public resetFields() {
@@ -55,6 +56,8 @@ export class FormManager {
 			...this.store,
 			[name]: value
 		};
+
+		this.updateStoreField(name)
 	};
 
 	getFieldValidate() {
@@ -68,5 +71,11 @@ export class FormManager {
 	setConfigWays() {
 
 	}
+
+	updateStoreField = (name: NameProps) => {
+		const update = this.update_store[name];
+		if (update) update?.updateValue();
+	};
+
 }
 
