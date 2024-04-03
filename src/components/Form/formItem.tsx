@@ -26,8 +26,8 @@ const FormItem: React.FC<IFormItemProps> = (props) => {
 	childrenWithProps = React.cloneElement(children as React.ReactElement, {
 		value: getFieldValue(name),
 		onChange: (e: any) => {
-			const payload: any = {};
-			payload[name] = e.target.value;
+			// const payload: any = {};
+			// payload[name] = e.target.value;
 
 			dispatch({
 				type: "updateValue",

@@ -1,4 +1,4 @@
-import { DataProps, FormInstance } from "./interface";
+import { DataProps, FormInstance, NameProps, ReducerAction } from "./interface";
 
 export class FormManager {
 	private store: DataProps = {};
@@ -22,8 +22,15 @@ export class FormManager {
 		}
 	}
 
-	dispatch() {
-
+	dispatch(action: ReducerAction) {
+		const {type, name, value} = action;
+		switch (type) {
+			case "updateValue": {
+				this.updateValue(name, value);
+				break;
+			}
+			default:
+		}
 	}
 
 	registerField() {
@@ -35,12 +42,20 @@ export class FormManager {
 	}
 
 	public resetFields() {
-
+		this.store = this.initialValues
 	}
 
-	getFieldValue() {
+	getFieldValue = (name?: NameProps) => {
+		if (!name) return this.store;
+		return this.store[name];
+	};
 
-	}
+	updateValue = (name: NameProps, value: unknown) => {
+		this.store = {
+			...this.store,
+			[name]: value
+		};
+	};
 
 	getFieldValidate() {
 
@@ -54,3 +69,4 @@ export class FormManager {
 
 	}
 }
+
