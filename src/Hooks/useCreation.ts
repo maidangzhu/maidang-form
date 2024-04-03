@@ -14,7 +14,7 @@ const depsAreSame = (
 	return true;
 };
 
-const useCreation = <T, >(fn: () => T, deps: DependencyList) => {
+export const useCreation = <T, >(fn: () => T, deps: DependencyList) => {
 	const {current} = useRef({
 		deps,
 		obj: undefined as undefined | T,
@@ -29,5 +29,3 @@ const useCreation = <T, >(fn: () => T, deps: DependencyList) => {
 
 	return current.obj as T;
 };
-
-export default useCreation;
