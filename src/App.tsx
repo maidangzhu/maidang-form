@@ -1,4 +1,6 @@
 import { Input, Flex, Space } from "antd";
+import Form from "./components/Form/form.tsx";
+import FormItem from "./components/Form/formItem.tsx";
 
 const boxStyle: React.CSSProperties = {
 	width: '100%',
@@ -19,8 +21,11 @@ function App() {
 			<Flex align="center" justify="center" style={boxStyle}>
 				<Space direction="vertical" size="middle">
 					Form component
-					<Input/>
-					<Input/>
+					<Form>
+						<FormItem name="name" label="name">
+							<Input/>
+						</FormItem>
+					</Form>
 				</Space>
 			</Flex>
 		</div>

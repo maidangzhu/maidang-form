@@ -1,16 +1,18 @@
-import { DataProps, FormInstance, NameProps, ReducerAction } from "./interface";
+import { ConfigWayProps, DataProps, FormInstance, NameProps, ReducerAction } from "./interface";
 
 export class FormManager {
 	private store: DataProps = {};
 	private readonly initialValues: DataProps = {};
 	private update_store: DataProps = {};
+	private configWays: ConfigWayProps = {}; // 收录对应的方法集合
 
 	constructor(initialValues: DataProps) {
 		this.store = initialValues;
 		this.initialValues = initialValues;
+		this.update_store = {};
 	}
 
-	getDetail(): FormInstance {
+	getDetail = (): FormInstance => {
 		return {
 			registerField: this.registerField,
 			unRegisterField: this.unRegisterField,
@@ -23,7 +25,7 @@ export class FormManager {
 		}
 	}
 
-	dispatch(action: ReducerAction) {
+	dispatch = (action: ReducerAction) => {
 		const {type, name, value} = action;
 		switch (type) {
 			case "updateValue": {
@@ -34,15 +36,15 @@ export class FormManager {
 		}
 	}
 
-	registerField(name: NameProps, updateChange: DataProps) {
+	registerField = (name: NameProps, updateChange: DataProps) => {
 		this.update_store[name] = updateChange;
 	}
 
-	unRegisterField(name: NameProps) {
+	unRegisterField = (name: NameProps) => {
 		delete this.update_store[name];
 	}
 
-	public resetFields() {
+	public resetFields = () => {
 		this.store = this.initialValues
 	}
 
@@ -60,15 +62,15 @@ export class FormManager {
 		this.updateStoreField(name)
 	};
 
-	getFieldValidate() {
+	getFieldValidate = () => {
 
 	}
 
-	submit() {
+	submit = () => {
 
 	}
 
-	setConfigWays() {
+	setConfigWays = () => {
 
 	}
 

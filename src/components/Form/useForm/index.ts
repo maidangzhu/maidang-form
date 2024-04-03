@@ -5,15 +5,16 @@ import { FormManager } from "./FormManager.ts";
 const useForm = (initialValues: DataProps, formInstance?: FormInstance) => {
 	const formRef = useRef<Nullable<FormInstance>>(null);
 
-	useEffect(() => {
-		if (!formRef.current) {
-			if (formInstance) {
-				formRef.current = formInstance;
-			} else {
-				formRef.current = new FormManager(initialValues).getDetail();
-			}
+	if (!formRef.current) {
+		if (formInstance) {
+			formRef.current = formInstance;
+		} else {
+			formRef.current = new FormManager(initialValues).getDetail();
 		}
-	}, [formInstance, initialValues])
+	}
+	// useEffect(() => {
+	//
+	// }, [formInstance, initialValues])
 
 	return [formRef.current]
 }

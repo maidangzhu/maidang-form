@@ -1,16 +1,17 @@
 import Layout from "./Layout.tsx";
-import React, { useCallback, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useUpdate } from "../../Hooks";
-import FormContext from "./useForm/FormContext.ts";
+import FormContext from "./useForm/FormContext";
+import useCreation from "../../Hooks/useCreation.ts";
 
 interface IFormItemProps {
 	name: string;
-	title: string;
+	label: string;
 	children: React.ReactNode;
 }
 
 const FormItem: React.FC<IFormItemProps> = (props) => {
-	const {title, name, children} = props
+	const {label, name, children} = props
 	const formContextValue = useContext(FormContext)
 	const {getFieldValue, dispatch, registerField, unRegisterField} = formContextValue;
 
@@ -18,18 +19,18 @@ const FormItem: React.FC<IFormItemProps> = (props) => {
 
 	let childrenWithProps = children
 
-	useEffect(() => {
-		const updateChange = () => {
-			return {
-				updateValue: () => update(),
-			};
+	const updateChange = useCreation(() => {
+		return {
+			updateValue: () => update(),
 		};
+	}, [])
 
+	useEffect(() => {
 		name && registerField(name, updateChange);
 		return () => {
 			name && unRegisterField(name);
 		};
-	}, [name, registerField, unRegisterField, update]);
+	}, [name, registerField, unRegisterField, updateChange]);
 
 	if (!React.isValidElement(children)) {
 		console.error('FormItem children must be a valid React element')
@@ -38,6 +39,7 @@ const FormItem: React.FC<IFormItemProps> = (props) => {
 
 	childrenWithProps = React.cloneElement(children as React.ReactElement, {
 		value: getFieldValue(name),
+		// eslint-disable-next-line
 		onChange: (e: any) => {
 			// const payload: any = {};
 			// payload[name] = e.target.value;
@@ -45,7 +47,7 @@ const FormItem: React.FC<IFormItemProps> = (props) => {
 			dispatch({
 				type: "updateValue",
 				name,
-				value: e.target?.value,
+				value: e?.target?.value,
 			});
 
 			update();
