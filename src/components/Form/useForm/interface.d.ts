@@ -14,13 +14,7 @@ export interface FormInstance {
 	setConfigWays: (callbacks: ConfigWayProps) => void;
 	submit: (cb?: unknown) => void;
 	resetFields: (cb?: () => void) => void;
-	getFieldValidate: (name: NameProps) => {
-		message: string
-		requiredMessage: string,
-		required: boolean,
-		status: "pen" | 'res' | 'rej',
-		rules: rulesProps[]
-	};
+	getFieldValidate: (name: NameProps) => validateRuleListProps | null;
 }
 
 export interface updateChangeProps {
