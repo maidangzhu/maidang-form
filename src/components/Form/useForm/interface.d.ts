@@ -1,21 +1,20 @@
 export type Nullable<T> = T | null;
 
 export interface ConfigWayProps {
-	onFinish?: (values: any) => void;
+	onFinish?: (values: unknown) => void;
 	onReset?: () => void;
-	onFinishFailed?: (values: any) => void;
-	// onFinishFailed?: (errorInfo: any) => void;
+	onFinishFailed?: (values: unknown) => void;
 }
 
 export interface FormInstance {
 	registerField: (name: NameProps, updateChange: DataProps) => void;
 	unRegisterField: (name: NameProps) => void;
-	getFieldValue: (name?: NameProps) => any;
+	getFieldValue: (name?: NameProps) => unknown;
 	dispatch: (action: ReducerAction) => void;
 	setConfigWays: (callbacks: ConfigWayProps) => void;
-	submit: (cb?: any) => void;
+	submit: (cb?: unknown) => void;
 	resetFields: (cb?: () => void) => void;
-	getFieldValidate: (name: NameProps) => any;
+	getFieldValidate: (name: NameProps) => unknown;
 }
 
 export interface updateChangeProps {
@@ -25,7 +24,7 @@ export interface updateChangeProps {
 export interface updateProps {
 	message?: string;
 	required?: boolean;
-	updateValue?: any;
+	updateValue?: unknown;
 	rules?: validateRuleProps[];
 }
 
@@ -42,20 +41,20 @@ export interface validateRuleListProps {
 }
 
 interface rulesProps {
-	rule?: RegExp | ((value: any) => boolean);
+	rule?: RegExp | ((value: unknown) => boolean);
 	message?: string;
 }
 
 export interface validateRuleProps {
 	required?: boolean;
 	message?: string;
-	rule?: RegExp | ((value: any) => boolean);
+	rule?: RegExp | ((value: unknown) => boolean);
 }
 
 export type validateStatusProps = "res" | "rej" | "pen"; // res 成功 rej 失败 pen 等待
 
 export interface DataProps {
-	[key: string]: any;
+	[key: string]: unknown;
 }
 
 export type NameProps = string | number;

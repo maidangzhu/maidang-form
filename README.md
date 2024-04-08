@@ -3,7 +3,7 @@ Build your own form component in React, like antd Form component.
 ## Example
 ```jsx
   <Form
-	initialValues={{ book: '玩转 React Hooks' }}
+	initialValues={{ book: '玩转 React hooks' }}
 	onFinish={(data: any) => {
 		console.log('form data:', data)
 	}}

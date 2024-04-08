@@ -1,28 +1,40 @@
+import { cloneElement, isValidElement, useEffect, useContext } from "react";
 import Layout from "./Layout.tsx";
-import React, { useContext, useEffect } from 'react'
-import { useUpdate, useCreation } from "../../Hooks";
 import FormContext from "./useForm/FormContext";
+import { updateProps, validateRuleProps } from "./useForm/interface.d";
+import { useCreation, useUpdate } from "../../hooks";
 
-interface IFormItemProps {
-	name: string;
-	label: string;
+interface FormItemProps {
+	label?: string;
+	tooltip?: string;
+	message?: string;
+	rules?: validateRuleProps[];
+	required?: boolean;
+	name?: string;
 	children: React.ReactNode;
 }
 
-const FormItem: React.FC<IFormItemProps> = (props) => {
-	const {label, name, children} = props
-	const formContextValue = useContext(FormContext)
-	const {getFieldValue, dispatch, registerField, unRegisterField} = formContextValue;
-
+const FormItem: React.FC<FormItemProps> = (props) => {
+	const {name = '', children, label, required, message, rules} = props;
 	const update = useUpdate();
 
-	let childrenWithProps = children
+	const contextValue = useContext(FormContext);
+	const {
+		getFieldValue,
+		dispatch,
+		registerField,
+		unRegisterField,
+		getFieldValidate,
+	} = contextValue;
 
-	const updateChange = useCreation(() => {
+	const updateChange: updateProps = useCreation(() => {
 		return {
+			message: message || `请填写${label}字段`,
+			required,
+			rules,
 			updateValue: () => update(),
 		};
-	}, [])
+	}, [contextValue, name]);
 
 	useEffect(() => {
 		name && registerField(name, updateChange);
@@ -31,33 +43,36 @@ const FormItem: React.FC<IFormItemProps> = (props) => {
 		};
 	}, [name, registerField, unRegisterField, updateChange]);
 
-	if (!React.isValidElement(children)) {
-		console.error('FormItem children must be a valid React element')
-		return <Layout {...props}>{childrenWithProps}</Layout>;
+	let childrenWIthProps;
+
+	if (isValidElement(children) && name) {
+		childrenWIthProps = cloneElement(children as React.ReactElement, {
+			value: getFieldValue(name),
+			onChange: (v: unknown) => {
+				const value = v?.target?.localName === "input" ? v?.target?.value : v;
+
+				dispatch({
+					type: "updateValue",
+					name,
+					value,
+				});
+
+				dispatch({
+					type: "validateField",
+					name,
+				});
+			},
+			status: getFieldValidate(name)?.status === "rej" ? "error" : undefined,
+		});
+	} else {
+		childrenWIthProps = children;
 	}
 
-	childrenWithProps = React.cloneElement(children as React.ReactElement, {
-		value: getFieldValue(name),
-		// eslint-disable-next-line
-		onChange: (e: any) => {
-			// const payload: any = {};
-			// payload[name] = e.target.value;
-
-			dispatch({
-				type: "updateValue",
-				name,
-				value: e?.target?.value,
-			});
-
-			update();
-		}
-	})
-
 	return (
-		<Layout {...props}>
-			{childrenWithProps}
+		<Layout {...props} {...getFieldValidate(name)}>
+			{childrenWIthProps}
 		</Layout>
-	)
-}
+	);
+};
 
-export default FormItem
+export default FormItem;
