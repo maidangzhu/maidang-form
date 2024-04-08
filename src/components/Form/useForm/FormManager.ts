@@ -66,13 +66,17 @@ export class FormManager {
 
 	}
 
+	setConfigWays = (configWays: ConfigWayProps) => {
+		this.configWays = configWays;
+	};
+
 	submit = () => {
+		const {onFinish} = this.configWays;
 
-	}
+		if (!onFinish) return
 
-	setConfigWays = () => {
-
-	}
+		onFinish(this.store);
+	};
 
 	updateStoreField = (name: NameProps) => {
 		const update = this.update_store[name];

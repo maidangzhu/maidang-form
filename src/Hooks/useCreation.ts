@@ -21,7 +21,7 @@ export const useCreation = <T, >(fn: () => T, deps: DependencyList) => {
 		initialized: false,
 	});
 
-	if (current.initialized === false || !depsAreSame(current.deps, deps)) {
+	if (!current.initialized || !depsAreSame(current.deps, deps)) {
 		current.deps = deps;
 		current.obj = fn();
 		current.initialized = true;
