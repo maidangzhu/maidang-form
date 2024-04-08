@@ -66,10 +66,12 @@ export class FormManager {
 
 	}
 
+	// 保存从业务层传递进来的方法
 	setConfigWays = (configWays: ConfigWayProps) => {
 		this.configWays = configWays;
 	};
 
+	// 执行从业务层传递进来的方法
 	submit = () => {
 		const {onFinish} = this.configWays;
 
