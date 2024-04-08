@@ -15,12 +15,14 @@ export class FormManager {
 	update_store: DataProps = {}; // 相当于是更新后的回调
 	configWays: ConfigWayProps = {}; // 收录对应的方法集合
 	validateRule: validateRule = {}; // 校验表单的规则
+	validateQueue: unknown[] = []; // 校验队列
 
 	constructor(initialValues: DataProps) {
 		this.store = initialValues;
 		this.initialValues = initialValues;
 		this.update_store = {};
 		this.validateRule = {};
+		this.validateQueue = [];
 	}
 
 	getDetail = (): FormInstance => {

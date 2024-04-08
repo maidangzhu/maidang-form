@@ -1,4 +1,4 @@
-Build your own form component in React, like antd Form component.
+Build your own form component in React, like Ant Design Form component.
 
 ## Example
 ```jsx
