@@ -101,6 +101,8 @@ export class FormManager {
 	};
 
 	getFieldValidate = (name: NameProps) => {
+
+		console.log("=>(FormManager.ts:105) this.validateRule[name]", this.validateRule[name]);
 		return this.validateRule[name];
 	};
 
@@ -183,9 +185,20 @@ export class FormManager {
 			message,
 			requiredMessage: message,
 			required: requiredFlag || false,
-			status: "pen", // 设置为等待状态
+			status: "pen", // 默认 pending
 			rules: rules.filter((v) => v?.rule), // 过滤掉有required的项
 		};
 	}
+
+	// 异步校验队列
+	promiseValidate = () => {
+		if (this.validateQueue.length === 0) return null;
+		Promise.resolve().then(() => {
+			do {
+				const validateUpdate = this.validateQueue.shift();
+				validateUpdate && validateUpdate(); /* 触发更新 */
+			} while (this.validateQueue.length > 0);
+		});
+	};
 }
 

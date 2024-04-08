@@ -88,7 +88,7 @@ function App() {
 						required
 						rules={[
 							{
-								rule: (v: any) => v.length < 5,
+								rule: (v: any) => v.length <= 5,
 								message: "输入不能超过5个",
 							},
 							{rule: /^[0-9]*$/, message: "请输入数字"},
