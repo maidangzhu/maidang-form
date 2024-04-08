@@ -14,7 +14,13 @@ export interface FormInstance {
 	setConfigWays: (callbacks: ConfigWayProps) => void;
 	submit: (cb?: unknown) => void;
 	resetFields: (cb?: () => void) => void;
-	getFieldValidate: (name: NameProps) => unknown;
+	getFieldValidate: (name: NameProps) => {
+		message: string
+		requiredMessage: string,
+		required: boolean,
+		status: "pen" | 'res' | 'rej',
+		rules: rulesProps[]
+	};
 }
 
 export interface updateChangeProps {
@@ -54,6 +60,10 @@ export interface validateRuleProps {
 export type validateStatusProps = "res" | "rej" | "pen"; // res 成功 rej 失败 pen 等待
 
 export interface DataProps {
+	[key: string]: unknown;
+}
+
+export interface ObjectProps {
 	[key: string]: unknown;
 }
 

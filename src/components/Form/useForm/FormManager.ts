@@ -101,7 +101,6 @@ export class FormManager {
 	};
 
 	getFieldValidate = (name: NameProps) => {
-
 		console.log("=>(FormManager.ts:105) this.validateRule[name]", this.validateRule[name]);
 		return this.validateRule[name];
 	};
