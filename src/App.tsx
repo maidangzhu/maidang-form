@@ -1,4 +1,4 @@
-import { Input, Flex, Space, Button } from "antd";
+import { Input, Flex, Button } from "antd";
 import Form from "./components/Form";
 import { FormInstance } from "./components/Form/useForm/interface";
 import { useRef } from "react";
@@ -21,8 +21,9 @@ function App() {
 
 	return (
 		<div style={wrapperStyle}>
-			<Flex align="center" justify="center" style={boxStyle}>
+			<Flex align="center" justify="start" style={boxStyle}>
 				<Form
+					style={{width: '100%'}}
 					initialValues={{name: 'maidang'}}
 					ref={ref}
 					onFinish={(data: unknown) => {
@@ -35,13 +36,15 @@ function App() {
 						console.log("重制表单成功");
 					}}
 				>
-					<Form.Item name="name" label="name">
+					<Form.Item name="name" label="name" tooltip="hello world">
 						<Input/>
 					</Form.Item>
 					<Form.Item>
 						<Button type="primary" htmlType="submit">
 							提交
 						</Button>
+					</Form.Item>
+					<Form.Item>
 						<Button style={{marginLeft: 4}} htmlType="reset">
 							重置
 						</Button>
