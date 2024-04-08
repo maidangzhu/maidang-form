@@ -1,6 +1,7 @@
-import { Input, Flex, Space } from "antd";
-import Form from "./components/Form/form.tsx";
-import FormItem from "./components/Form/formItem.tsx";
+import { Input, Flex, Space, Button } from "antd";
+import Form from "./components/Form";
+import { FormInstance } from "./components/Form/useForm/interface";
+import { useRef } from "react";
 
 const boxStyle: React.CSSProperties = {
 	width: '100%',
@@ -16,17 +17,36 @@ const wrapperStyle: React.CSSProperties = {
 }
 
 function App() {
+	const ref = useRef<FormInstance>(null);
+
 	return (
 		<div style={wrapperStyle}>
 			<Flex align="center" justify="center" style={boxStyle}>
-				<Space direction="vertical" size="middle">
-					Form component
-					<Form>
-						<FormItem name="name" label="name">
-							<Input/>
-						</FormItem>
-					</Form>
-				</Space>
+				<Form
+					initialValues={{name: 'maidang'}}
+					ref={ref}
+					onFinish={(data: unknown) => {
+						console.log("表单数据:", data);
+					}}
+					onFinishFailed={(errorInfo: unknown) => {
+						console.log("Failed:", errorInfo);
+					}}
+					onReset={() => {
+						console.log("重制表单成功");
+					}}
+				>
+					<Form.Item name="name" label="name">
+						<Input/>
+					</Form.Item>
+					<Form.Item>
+						<Button type="primary" htmlType="submit">
+							提交
+						</Button>
+						<Button style={{marginLeft: 4}} htmlType="reset">
+							重置
+						</Button>
+					</Form.Item>
+				</Form>
 			</Flex>
 		</div>
 	)

@@ -23,6 +23,7 @@ const Form = forwardRef((props: FormProps, ref) => {
 		...payload
 	} = props;
 
+	// 获取 FormManager 实例
 	const [formRef] = useForm(initialValues, form);
 
 	const {
@@ -35,6 +36,7 @@ const Form = forwardRef((props: FormProps, ref) => {
 
 	useImperativeHandle(ref, () => formRefInstance, [formRefInstance]);
 
+	// 设置 FormManager 实例的方法
 	formRef?.setConfigWays({
 		onFinish,
 		onReset,
