@@ -101,6 +101,7 @@ export class FormManager {
 	validateFieldValue = (name: NameProps) => {
 		const data = this.validateRule[name];
 		if (!data) return null;
+
 		const value = this.store[name];
 		const last_status = data.status;
 		const last_message = data.message;
