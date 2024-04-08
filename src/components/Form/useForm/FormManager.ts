@@ -39,15 +39,20 @@ export class FormManager {
 	}
 
 	dispatch = (action: ReducerAction) => {
-		const {type, name, value} = action;
-		switch (type) {
+		switch (action.type) {
 			case "updateValue": {
+				const {name, value} = action;
 				this.updateValue(name, value);
+				break;
+			}
+			case "validateField": {
+				const {name} = action;
+				this.validateFieldValue(name); // 触发单个更新
 				break;
 			}
 			default:
 		}
-	}
+	};
 
 	registerField = (name: NameProps, updateChange: DataProps) => {
 		this.update_store[name] = updateChange;
@@ -95,9 +100,9 @@ export class FormManager {
 		this.updateStoreField(name)
 	};
 
-	getFieldValidate = () => {
-
-	}
+	getFieldValidate = (name: NameProps) => {
+		return this.validateRule[name];
+	};
 
 	// 保存从业务层传递进来的方法
 	setConfigWays = (configWays: ConfigWayProps) => {
@@ -163,10 +168,8 @@ export class FormManager {
 		return flag;
 	};
 
-	createValidate(
-		name: NameProps,
-		updateChange: updateProps
-	): validateRuleListProps | null {
+	createValidate(name: NameProps, updateChange: updateProps):
+		validateRuleListProps | null {
 		const {rules = [], required = false, message = ""} = updateChange;
 		if (rules.length === 0 && !required) return null;
 

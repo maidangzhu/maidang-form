@@ -24,7 +24,7 @@ const Index: React.FC<IndexProps> = (
 		<>
 			<Row gutter={8}>
 				<Col
-					span={4}
+					span={5}
 					style={{textAlign: "right", lineHeight: "32px", fontSize: 14}}
 				>
 					{required && <span style={{color: "red", marginRight: 3}}>*</span>}

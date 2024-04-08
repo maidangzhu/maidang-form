@@ -1,10 +1,10 @@
 Build your own form component in React, like Ant Design Form component.
 
 ## Example
-```jsx
+```tsx
   <Form
-	initialValues={{ book: '玩转 React hooks' }}
-	onFinish={(data: any) => {
+	initialValues={{ name: 'maidang form' }}
+	onFinish={(data: unknown) => {
 		console.log('form data:', data)
 	}}
 	onReset={() => {
