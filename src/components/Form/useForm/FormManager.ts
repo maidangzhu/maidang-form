@@ -59,9 +59,27 @@ export class FormManager {
 		delete this.validateRule[name];
 	}
 
-	public resetFields = () => {
-		this.store = this.initialValues
-	}
+	// 重置表单
+	resetFields = (cb?: () => void) => {
+		const {onReset} = this.configWays;
+		Object.keys(this.store).forEach((key) => {
+			// 重置表单的时候，如果有初始值，就用初始值，没有就删除
+			this.initialValues[key]
+				? (this.store[key] = this.initialValues[key])
+				: delete this.store[key];
+			this.updateStoreField(key);
+		});
+
+		Object.keys(this.validateRule).forEach((key) => {
+			const data = this.validateRule[key];
+			if (data) {
+				if (data.status === "rej") this.updateStoreField(key);
+				data.status = "pen";
+			}
+		});
+		cb && cb();
+		onReset && onReset();
+	};
 
 	getFieldValue = (name?: NameProps) => {
 		if (!name) return this.store;
