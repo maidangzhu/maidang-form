@@ -37,7 +37,7 @@ function App() {
 					}}
 				>
 					<Form.Item label="名称" name="name">
-						<Input placeholder="请输入作者"/>
+						<Input placeholder="请输入名称"/>
 					</Form.Item>
 
 					<Form.Item label="提示语" tooltip="我是提示语" name="tooltip">
