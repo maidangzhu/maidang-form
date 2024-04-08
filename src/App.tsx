@@ -24,7 +24,7 @@ function App() {
 			<Flex align="start" justify="start" style={boxStyle} vertical>
 				<Form
 					style={{width: '100%'}}
-					initialValues={{book: "玩转 React Hooks", name: 'maidang'}}
+					initialValues={{name: 'maidang'}}
 					ref={ref}
 					onFinish={(data: any) => {
 						console.log("表单数据:", data);
@@ -36,10 +36,7 @@ function App() {
 						console.log("重制表单成功");
 					}}
 				>
-					<Form.Item label="小册名称" name="book">
-						<Input placeholder="请输入小册名称"/>
-					</Form.Item>
-					<Form.Item label="作者" name="name">
+					<Form.Item label="名称" name="name">
 						<Input placeholder="请输入作者"/>
 					</Form.Item>
 
