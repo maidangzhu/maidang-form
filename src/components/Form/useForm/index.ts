@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { DataProps, FormInstance, Nullable } from "./interface";
 import { FormManager } from "./FormManager.ts";
 
@@ -18,9 +18,6 @@ const useForm = (initialValues: DataProps, formInstance?: FormInstance) => {
 			formRef.current = new FormManager(initialValues).getDetail();
 		}
 	}
-	// useEffect(() => {
-	//
-	// }, [formInstance, initialValues])
 
 	return [formRef.current]
 }
